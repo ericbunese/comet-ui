@@ -1,0 +1,35 @@
+<div class="page">
+    <div class="login-window">
+        <div class="row flex-column">
+            <div class="col-12 flex-center">
+                <div class="flex-column">
+                    <div class="col-12 flex-center">
+                        <h1>Login</h1>
+                    </div>
+                    <div class="col-12 flex-center">
+                        <h3 *ngIf="this.error != null && this.error.length > 0"
+                            class="error">{{this.error}}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 flex-center">
+                <label for="username">Username</label>
+                <input name="username"
+                       [(ngModel)]="this.username">
+            </div>
+
+            <div class="col-12 flex-center">
+                <label for="password">Password</label>
+                <input name="password"
+                       type="password"
+                       [(ngModel)]="this.password">
+            </div>
+
+            <div class="col-12 flex-center">
+                <button class="btn btn-primary"
+                        (click)="this.submit();">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
