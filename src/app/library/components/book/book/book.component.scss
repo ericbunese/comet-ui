@@ -1,0 +1,27 @@
+.book {
+    background-color: bisque;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.author {
+    margin-bottom: 5px;
+}
+
+.empty {
+    opacity: 0.5;
+}
+
+.empty:focus {
+    opacity: 1.0;
+}
+
+.save {
+    margin-top: 20px;
+}

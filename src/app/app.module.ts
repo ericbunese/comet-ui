@@ -11,12 +11,16 @@ import { LibraryComponent } from './library/components/library/library.component
 import { CometIntegrationService } from './library/services/comet-integration.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NetworkInterceptor } from './core/services/network.interceptor';
+import { BookComponent } from './library/components/book/book/book.component';
+import { AuthorsPipe } from './core/pipes/authors.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    LibraryComponent
+    LibraryComponent,
+    BookComponent,
+    AuthorsPipe
   ],
   imports: [
     BrowserModule,

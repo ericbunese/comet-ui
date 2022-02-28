@@ -1,0 +1,51 @@
+<div class="book">
+    <div class="row"
+         *ngIf="this.book?.id != null">
+        <div class="col-12">
+            <h1>{{this.book?.name}}</h1>
+            <h3>{{this.book?.year}}</h3>
+            <h5>{{this.book | authors}}</h5>
+        </div>
+    </div>
+
+    <div class="row"
+         *ngIf="this.book != null && this.book?.id == null">
+        <div class="col-12 field">
+            <label for="bookname">Book Name</label>
+            <input name="bookname"
+                   [(ngModel)]="this.book.name">
+        </div>
+
+        <div class="col-12 field">
+            <label>Authors</label>
+            <ng-container *ngFor="let author of this.book.authors; let i = index; let last = last; let first = first;">
+
+                <input class="author"
+                       [ngClass]="{'empty': !first && (author == null || author.length <= 0)}"
+                       [ngModel]="author"
+                       (ngModelChange)="this.authorvalue = $event;"
+                       (blur)="this.setAuthor(i); this.addAuthor(last);">
+            </ng-container>
+        </div>
+
+        <div class="col-12 field">
+            <label for="bookyear">Year</label>
+            <input name="bookyear"
+                   type="number"
+                   [(ngModel)]="this.book.year">
+        </div>
+
+        <div class="col-12 field">
+            <label for="summary">Summary</label>
+            <textarea name="summary"
+                      [(ngModel)]="this.book.summary"
+                      rows="8"
+                      maxlength="500"></textarea>
+        </div>
+
+        <div class="col-12 field save">
+            <button class="btn btn-primary"
+                    (click)="this.saveBook();">Save</button>
+        </div>
+    </div>
+</div>

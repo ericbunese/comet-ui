@@ -1,1 +1,4 @@
-<ng-container *ngFor="let book of this.books; let i = index;"></ng-container>
+<app-book *ngFor="let book of this.books; let i = index;"
+          [book]="book"
+          (bookChange)="this.addBook($event);">
+</app-book>

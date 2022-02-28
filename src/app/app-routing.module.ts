@@ -6,15 +6,15 @@ import { LibraryComponent } from './library/components/library/library.component
 
 const routes: Routes = [
   {
-    // Basic login screen route
-    path: '',
-    component: LoginComponent
-  },
-  {
     // Guarded library screen route
     path: 'library',
     component: LibraryComponent,
     canActivate: [AuthorizationService]
+  },
+  {
+    // Basic login screen route
+    path: '**',
+    component: LoginComponent
   }
 ];
 
