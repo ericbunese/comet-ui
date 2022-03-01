@@ -1,4 +1,5 @@
 <app-book *ngFor="let book of this.books; let i = index;"
           [book]="book"
-          (bookChange)="this.addBook($event);">
+          (bookChange)="this.addBook($event);"
+          (bookDelete)="this.deleteBook(book);">
 </app-book>

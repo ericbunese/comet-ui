@@ -1,15 +1,29 @@
 <div class="book">
     <div class="row"
-         *ngIf="this.book?.id != null">
-        <div class="col-12">
+         *ngIf="this.book?.id != null && !this.editMode">
+        <div class="col-5">
             <h1>{{this.book?.name}}</h1>
             <h3>{{this.book?.year}}</h3>
             <h5>{{this.book | authors}}</h5>
         </div>
+        <div class="col-5 field">
+            <label for="summaryread">Summary</label>
+            <textarea name="summaryread"
+                      [ngModel]="this.book?.summary"
+                      rows="8"
+                      disabled="true"
+                      maxlength="500"></textarea>
+        </div>
+        <div class="col-2 buttons">
+            <button class="btn btn-info"
+                    (click)="this.edit();">Edit</button>
+            <button class="btn btn-danger"
+                    (click)="this.deleteBook();">Remove</button>
+        </div>
     </div>
 
     <div class="row"
-         *ngIf="this.book != null && this.book?.id == null">
+         *ngIf="this.book != null && (this.book?.id == null || this.editMode)">
         <div class="col-12 field">
             <label for="bookname">Book Name</label>
             <input name="bookname"

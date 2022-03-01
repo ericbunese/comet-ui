@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, Subscriber } from 'rxjs';
 import { Token } from '../models/token.model';
 import { User } from '../models/user.model';
@@ -19,7 +19,7 @@ export class AuthorizationService implements CanActivate {
   // Token interface for identifying authenticated users.
   private token: Token = new Token({ invalid: true });
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   // Login method, checks if the username is present in the accepted usernames array.
   // If it is, returns an Observable of the new Token.
@@ -47,6 +47,10 @@ export class AuthorizationService implements CanActivate {
   // Guard used for activating routes, otherwise will fallback to login screen.
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     let obs = new Observable<boolean | UrlTree>((subs) => {
+
+      if (this.token.invalid)
+        this.router.navigateByUrl('');
+
       subs.next(!this.token.invalid);
       subs.complete();
     });

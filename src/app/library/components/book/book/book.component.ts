@@ -10,8 +10,10 @@ export class BookComponent implements OnInit {
 
   @Input() book: Book | null = null;
   @Output() bookChange: EventEmitter<Book> = new EventEmitter<Book>();
+  @Output() bookDelete: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public authorvalue: string = '';
+  public editMode: boolean = false;
 
   constructor() { }
 
@@ -37,5 +39,15 @@ export class BookComponent implements OnInit {
   public saveBook() {
     if (this.book)
       this.bookChange.next(this.book);
+
+    this.editMode = false;
+  }
+
+  public edit() {
+    this.editMode = true;
+  }
+
+  public deleteBook() {
+    this.bookDelete.next(true);
   }
 }

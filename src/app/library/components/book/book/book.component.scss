@@ -10,6 +10,12 @@
     justify-content: flex-start;
 }
 
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
 .author {
     margin-bottom: 5px;
 }
