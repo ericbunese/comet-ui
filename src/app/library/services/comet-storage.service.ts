@@ -21,7 +21,14 @@ export class CometStorageService implements IComet {
 
       if (item != null) {
         var json = JSON.parse(item) as any[];
-        subs.next(json.map((b: Book) => new Book(b)));
+        var books = json.map((b: Book) => new Book(b));
+
+        // Emulate search by name
+        if (queryname != null && queryname.length > 0) {
+          books = books.filter(b => b.name.toLowerCase().includes(queryname.toLowerCase()));
+        }
+
+        subs.next(books);
         subs.complete();
       }
       else subs.next([]);

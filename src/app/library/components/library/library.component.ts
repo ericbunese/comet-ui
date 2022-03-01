@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 import { Book } from '../../models/book.model';
 import { CometIntegrationService } from '../../services/comet-integration.service';
 import { CometStorageService } from '../../services/comet-storage.service';
@@ -8,9 +9,13 @@ import { CometStorageService } from '../../services/comet-storage.service';
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.scss']
 })
-export class LibraryComponent implements OnInit {
+export class LibraryComponent implements OnInit, OnDestroy {
 
   private _books: Book[] = [];
+
+  public queryname: string | null = '';
+  private searchSubj: Subject<string> = new Subject<string>();
+  private searchSubs: Subscription | null = null;
 
   public get books(): Book[] {
     return this._books;
@@ -26,6 +31,17 @@ export class LibraryComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadBooks();
+
+    // Subscribe with a pipe to the searching subscription.
+    this.searchSubs = this.searchSubj.pipe(debounceTime(300)).subscribe({
+      next: (value) => {
+        this.loadBooks();
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (this.searchSubs) this.searchSubs.unsubscribe();
   }
 
   // Adds an empty book to edit if there are none
@@ -83,7 +99,7 @@ export class LibraryComponent implements OnInit {
 
   public loadBooks() {
     // Update the list from the service interface
-    this.comet.listBooks(null).subscribe({
+    this.comet.listBooks(this.queryname).subscribe({
       next: (books) => {
         this.books = books.map(b => new Book(b));
       },
@@ -91,5 +107,11 @@ export class LibraryComponent implements OnInit {
         this.books = [];
       }
     });
+  }
+
+  public emitSearch(value: string | null) {
+    this.queryname = value;
+
+    this.searchSubj.next(this.queryname || '');
   }
 }
