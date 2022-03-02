@@ -1,3 +1,4 @@
+import { ComponentFactoryResolver } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LibraryComponent } from './library.component';
@@ -8,9 +9,9 @@ describe('LibraryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LibraryComponent ]
+      declarations: [LibraryComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -21,5 +22,10 @@ describe('LibraryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load books or empty', () => {
+    component.loadBooks();
+    expect(typeof component.books).toBe(typeof []);
   });
 });
